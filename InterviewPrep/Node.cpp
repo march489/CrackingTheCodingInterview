@@ -25,6 +25,8 @@ void Node::RunTests_Node()
 	}
 
 	Node::DeleteList( pHead );
+
+	// make sure all dynamic allocations have been freed
 	assert( Node::nodeCount == 0 );
 
 	std::cout << " all tests passed." << std::endl;

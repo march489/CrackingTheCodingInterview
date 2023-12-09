@@ -13,14 +13,16 @@ public:
 
 	Node* AppendNodeToTail( int k );
 	Node* FindNode( int k );
-	bool DeleteNode( int k );
 	void ClearList();
 
+	bool DeleteNode(int k);
 	void RemoveDuplicates();
+	void DeleteMiddleNode();
 
 	static void RunTests_LinkedList();
 	static void DeleteTest();
 	static void RemoveDupsTest();
+	static void DeleteMiddleTest();
 
 	// data
 private:
