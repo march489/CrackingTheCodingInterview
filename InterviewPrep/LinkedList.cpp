@@ -102,7 +102,6 @@ void LinkedList::ClearList( )
 	}
 
 	assert( this->poHead == nullptr );
-	assert( Node::nodeCount == 0 );
 }
 
 void LinkedList::RemoveDuplicates( )
@@ -225,6 +224,70 @@ Node* LinkedList::KthToLast( int k ) const
 	return pNode;
 }
 
+void LinkedList::Partition( int k )
+{
+	Node* pNode = this->poHead;
+	Node* pLeftPartition = nullptr;
+	Node* pLeftTail = nullptr;
+	Node* pRightPartition = nullptr;
+	Node* pRightTail = nullptr;
+
+	auto addToPartition = [] ( Node*& pPartitionHead, Node*& pPartitionTail, Node* p )
+		{
+			if ( pPartitionTail )
+			{
+				assert( pPartitionHead );
+				assert( pPartitionTail->pNext == nullptr );
+
+				pPartitionTail->pNext = p;
+				pPartitionTail = p;
+			}
+			else
+			{
+				assert( pPartitionHead == nullptr );
+
+				pPartitionHead = p;
+				pPartitionTail = p;
+			}
+		};
+
+	while ( pNode )
+	{
+		if ( pNode->data < k )
+		{
+			addToPartition( pLeftPartition, pLeftTail, pNode );
+		}
+		else
+		{
+			addToPartition( pRightPartition, pRightTail, pNode );
+		}
+
+		Node* pTmp = pNode;
+
+		// disconnect the node
+		pNode = pNode->pNext;
+		pTmp->pNext = nullptr;
+	}
+
+	if ( pLeftPartition )
+	{
+		if( pLeftTail )
+		{
+			this->poHead = pLeftPartition;
+			pLeftTail->pNext = pRightPartition;
+		}
+		else
+		{
+			// scream
+			assert( false );
+		}
+	}
+	else
+	{
+		this->poHead = pRightPartition;
+	}
+}
+
 void LinkedList::RunTests_LinkedList( )
 {
 	std::cout << "Beginning LinkedList tests...";
@@ -233,6 +296,7 @@ void LinkedList::RunTests_LinkedList( )
 	LinkedList::RemoveDupsTest( );
 	LinkedList::DeleteMiddleTest( );
 	LinkedList::KthToLastTest( );
+	LinkedList::PartitionTest( );
 
 	// assert that all dynamic allocations have been freed
 	assert( Node::nodeCount == 0 );
@@ -532,6 +596,360 @@ void LinkedList::KthToLastTest( )
 		assert( pNode );
 		assert( pNode->data == i );
 	}
+}
+
+void LinkedList::PartitionTest( )
+{
+	LinkedList list1;
+
+	list1.AppendNodeToTail( 3 );
+	list1.AppendNodeToTail( 0 );
+	list1.AppendNodeToTail( 5 );
+	list1.AppendNodeToTail( 3 );
+	list1.AppendNodeToTail( 2 );
+	list1.AppendNodeToTail( 4 );
+	list1.AppendNodeToTail( 8 );
+	list1.AppendNodeToTail( 8 );
+	list1.AppendNodeToTail( 1 );
+	list1.AppendNodeToTail( 1 );
+	list1.AppendNodeToTail( -2 );
+	list1.AppendNodeToTail( 11 );
+
+	assert( Node::nodeCount == 12 );
+
+	list1.Partition( 3 );
+
+	Node* pNode = list1.poHead;
+
+	assert( pNode );
+	assert( pNode->data == 0 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 2 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 1 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 1 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == -2 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 3 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 5 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 3 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 4 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 8 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 8 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 11 );
+	pNode = pNode->pNext;
+
+	// we've reached the end of the list
+	assert( pNode == nullptr );
+
+	/////////////////////////////////
+
+	LinkedList list2;
+
+	list2.AppendNodeToTail( 3 );
+	list2.AppendNodeToTail( 0 );
+	list2.AppendNodeToTail( 5 );
+	list2.AppendNodeToTail( 3 );
+	list2.AppendNodeToTail( 2 );
+	list2.AppendNodeToTail( 4 );
+	list2.AppendNodeToTail( 8 );
+	list2.AppendNodeToTail( 8 );
+	list2.AppendNodeToTail( 1 );
+	list2.AppendNodeToTail( 1 );
+	list2.AppendNodeToTail( -2 );
+	list2.AppendNodeToTail( 11 );
+
+	assert( Node::nodeCount == 24 );
+
+	list2.Partition( 8 );
+
+	pNode = list2.poHead;
+
+	assert( pNode );
+	assert( pNode->data == 3 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 0 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 5 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 3 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 2 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 4 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 1 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 1 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == -2 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 8 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 8 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 11 );
+	pNode = pNode->pNext;
+
+	// we've reached the end of the list
+	assert( pNode == nullptr );
+
+	/////////////////////////////////
+
+	LinkedList list3;
+
+	list3.AppendNodeToTail( 3 );
+	list3.AppendNodeToTail( 0 );
+	list3.AppendNodeToTail( 5 );
+	list3.AppendNodeToTail( 3 );
+	list3.AppendNodeToTail( 2 );
+	list3.AppendNodeToTail( 4 );
+	list3.AppendNodeToTail( 8 );
+	list3.AppendNodeToTail( 8 );
+	list3.AppendNodeToTail( 1 );
+	list3.AppendNodeToTail( 1 );
+	list3.AppendNodeToTail( -2 );
+	list3.AppendNodeToTail( 11 );
+
+	assert( Node::nodeCount == 36 );
+
+	list3.Partition( -2 );
+
+	pNode = list3.poHead;
+
+	assert( pNode );
+	assert( pNode->data == 3 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 0 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 5 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 3 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 2 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 4 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 8 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 8 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 1 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 1 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == -2 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 11 );
+	pNode = pNode->pNext;
+
+	// we've reached the end of the list
+	assert( pNode == nullptr );
+
+	/////////////////////////////////
+
+	LinkedList list4;
+
+	list4.AppendNodeToTail( 3 );
+	list4.AppendNodeToTail( 0 );
+	list4.AppendNodeToTail( 5 );
+	list4.AppendNodeToTail( 3 );
+	list4.AppendNodeToTail( 2 );
+	list4.AppendNodeToTail( 4 );
+	list4.AppendNodeToTail( 8 );
+	list4.AppendNodeToTail( 8 );
+	list4.AppendNodeToTail( 1 );
+	list4.AppendNodeToTail( 1 );
+	list4.AppendNodeToTail( -2 );
+	list4.AppendNodeToTail( 11 );
+
+	assert( Node::nodeCount == 48 );
+
+	// should do nothing
+	list4.Partition( 11 );
+
+	pNode = list4.poHead;
+
+	assert( pNode );
+	assert( pNode->data == 3 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 0 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 5 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 3 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 2 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 4 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 8 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 8 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 1 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 1 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == -2 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 11 );
+	pNode = pNode->pNext;
+
+	// we've reached the end of the list
+	assert( pNode == nullptr );
+
+	// should do nothing
+	list4.Partition( -5 );
+
+	pNode = list4.poHead;
+
+	assert( pNode );
+	assert( pNode->data == 3 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 0 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 5 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 3 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 2 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 4 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 8 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 8 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 1 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 1 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == -2 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 11 );
+	pNode = pNode->pNext;
+
+	// we've reached the end of the list
+	assert( pNode == nullptr );
 }
 
 LinkedList::~LinkedList( )
