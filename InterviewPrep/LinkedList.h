@@ -19,12 +19,14 @@ class LinkedList
 	void RemoveDuplicates( );
 	void DeleteMiddleNode( );
 	Node* KthToLast( int k ) const;
+	void Partition( int k );
 
 	static void RunTests_LinkedList( );
 	static void DeleteTest( );
 	static void RemoveDupsTest( );
 	static void DeleteMiddleTest( );
 	static void KthToLastTest( );
+	static void PartitionTest( );
 
 	// data
 	private:
