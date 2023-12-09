@@ -5,27 +5,29 @@ class Node;
 
 class LinkedList
 {
-public:
-	LinkedList();
+	public:
+	LinkedList( );
 	LinkedList( const LinkedList& ) = delete;
 	LinkedList& operator=( const LinkedList& ) = delete;
-	~LinkedList();
+	~LinkedList( );
 
 	Node* AppendNodeToTail( int k );
 	Node* FindNode( int k );
-	void ClearList();
+	void ClearList( );
 
-	bool DeleteNode(int k);
-	void RemoveDuplicates();
-	void DeleteMiddleNode();
+	bool DeleteNode( int k );
+	void RemoveDuplicates( );
+	void DeleteMiddleNode( );
+	Node* KthToLast( int k ) const;
 
-	static void RunTests_LinkedList();
-	static void DeleteTest();
-	static void RemoveDupsTest();
-	static void DeleteMiddleTest();
+	static void RunTests_LinkedList( );
+	static void DeleteTest( );
+	static void RemoveDupsTest( );
+	static void DeleteMiddleTest( );
+	static void KthToLastTest( );
 
 	// data
-private:
+	private:
 	Node* poHead;
 };
 

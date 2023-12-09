@@ -183,6 +183,48 @@ void LinkedList::DeleteMiddleNode( )
 	pSlow = nullptr;
 }
 
+Node* LinkedList::KthToLast( int k ) const
+{
+	Node* pNode{ nullptr };
+	Node* pFast{ nullptr };
+
+	if ( k >= 0 )
+	{
+		pFast = this->poHead;
+
+		while ( pFast && k > 0 )
+		{
+			pFast = pFast->pNext;
+			k--;
+		}
+
+		// when we fall out of the for loop,
+		// either pFast is valid or nullptr
+		// if valid, then k guaranteed to be 0.
+
+		if ( pFast )
+		{
+			pNode = this->poHead;
+
+			while ( pFast->pNext )
+			{
+				pFast = pFast->pNext;
+				pNode = pNode->pNext;
+			}
+		}
+		else
+		{
+			// do nothing
+		}
+	}
+	else
+	{
+		// do nothing
+	}
+
+	return pNode;
+}
+
 void LinkedList::RunTests_LinkedList( )
 {
 	std::cout << "Beginning LinkedList tests...";
@@ -190,6 +232,7 @@ void LinkedList::RunTests_LinkedList( )
 	LinkedList::DeleteTest( );
 	LinkedList::RemoveDupsTest( );
 	LinkedList::DeleteMiddleTest( );
+	LinkedList::KthToLastTest( );
 
 	// assert that all dynamic allocations have been freed
 	assert( Node::nodeCount == 0 );
@@ -469,6 +512,26 @@ void LinkedList::DeleteMiddleTest( )
 	// we're at the end of the list
 	assert( pNode == nullptr );
 	assert( Node::nodeCount == 2 );
+}
+
+void LinkedList::KthToLastTest( )
+{
+	LinkedList list;
+
+	for ( int i = 9; i >= 0; i-- )
+	{
+		list.AppendNodeToTail( i );
+	}
+
+	assert( Node::nodeCount == 10 );
+
+	Node* pNode = nullptr;
+	for ( int i = 0; i < 10; i++ )
+	{
+		pNode = list.KthToLast( i );
+		assert( pNode );
+		assert( pNode->data == i );
+	}
 }
 
 LinkedList::~LinkedList( )
