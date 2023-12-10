@@ -824,6 +824,7 @@ void LinkedList::PartitionTest( )
 
 	LinkedList list4;
 
+	list4.AppendNodeToTail( 11 );
 	list4.AppendNodeToTail( 3 );
 	list4.AppendNodeToTail( 0 );
 	list4.AppendNodeToTail( 5 );
@@ -835,7 +836,6 @@ void LinkedList::PartitionTest( )
 	list4.AppendNodeToTail( 1 );
 	list4.AppendNodeToTail( 1 );
 	list4.AppendNodeToTail( -2 );
-	list4.AppendNodeToTail( 11 );
 
 	assert( Node::nodeCount == 48 );
 
