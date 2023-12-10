@@ -7,8 +7,8 @@ class LinkedList
 {
 	public:
 	LinkedList( );
-	LinkedList( const LinkedList& ) = delete;
-	LinkedList& operator=( const LinkedList& ) = delete;
+	LinkedList( const LinkedList& );
+	LinkedList& operator=( const LinkedList& );
 	~LinkedList( );
 
 	Node* AppendNodeToTail( int k );
@@ -20,6 +20,7 @@ class LinkedList
 	void DeleteMiddleNode( );
 	Node* KthToLast( int k ) const;
 	void Partition( int k );
+	LinkedList ReverseSum( const LinkedList& rhs ) const;
 
 	static void RunTests_LinkedList( );
 	static void DeleteTest( );
@@ -27,6 +28,7 @@ class LinkedList
 	static void DeleteMiddleTest( );
 	static void KthToLastTest( );
 	static void PartitionTest( );
+	static void ReversedSumTest( );
 
 	// data
 	private:

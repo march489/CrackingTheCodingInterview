@@ -10,6 +10,73 @@ LinkedList::LinkedList( )
 
 }
 
+LinkedList::LinkedList( const LinkedList& inNode )
+	: poHead( nullptr )
+{
+	Node* pOriginalNode = inNode.poHead;
+	Node* pCopyTail = nullptr;
+
+	while ( pOriginalNode )
+	{
+		if ( this->poHead )
+		{
+			// hygiene check
+			assert( pCopyTail && pCopyTail->pNext == nullptr );
+
+			// create new node
+			pCopyTail->pNext = new Node( pOriginalNode->data );
+			assert( pCopyTail->pNext );
+
+			pCopyTail = pCopyTail->pNext;
+		}
+		else
+		{
+			this->poHead = new Node( pOriginalNode->data );
+			assert( this->poHead );
+
+			pCopyTail = this->poHead;
+		}
+
+		pOriginalNode = pOriginalNode->pNext;
+	}
+}
+
+LinkedList& LinkedList::operator=( const LinkedList& inNode )
+{
+	// just in case
+	this->ClearList( );
+
+	// copy the list over
+	Node* pOriginalNode = inNode.poHead;
+	Node* pCopyTail = nullptr;
+
+	while ( pOriginalNode )
+	{
+		if ( this->poHead )
+		{
+			// hygiene check
+			assert( pCopyTail && pCopyTail->pNext == nullptr );
+
+			// create new node
+			pCopyTail->pNext = new Node( pOriginalNode->data );
+			assert( pCopyTail->pNext );
+
+			pCopyTail = pCopyTail->pNext;
+		}
+		else
+		{
+			this->poHead = new Node( pOriginalNode->data );
+			assert( this->poHead );
+
+			pCopyTail = this->poHead;
+		}
+
+		pOriginalNode = pOriginalNode->pNext;
+	}
+
+	return *this;
+}
+
 Node* LinkedList::AppendNodeToTail( int k )
 {
 	Node* pNewNode = nullptr;
@@ -271,7 +338,7 @@ void LinkedList::Partition( int k )
 
 	if ( pLeftPartition )
 	{
-		if( pLeftTail )
+		if ( pLeftTail )
 		{
 			this->poHead = pLeftPartition;
 			pLeftTail->pNext = pRightPartition;
@@ -288,6 +355,82 @@ void LinkedList::Partition( int k )
 	}
 }
 
+LinkedList LinkedList::ReverseSum( const LinkedList& rhs ) const
+{
+	Node* pLeft = this->poHead;
+	Node* pRight = rhs.poHead;
+	int carry = 0;
+
+	LinkedList result;
+	Node* pResultTail{ nullptr };
+
+	while ( pLeft || pRight )
+	{
+		int left = 0;
+		int right = 0;
+
+		// get digits safely
+		if ( pLeft )
+		{
+			left = pLeft->data;
+			pLeft = pLeft->pNext;
+		}
+		else
+		{
+			// do nothing
+		}
+
+		if ( pRight )
+		{
+			right = pRight->data;
+			pRight = pRight->pNext;
+		}
+		else
+		{
+			// do nothing
+		}
+
+		int tmp = left + right + carry;
+
+		// adjust if over 10 & set carry flag
+		if ( tmp > 9 )
+		{
+			carry = 1;
+			tmp -= 10;
+		}
+		else
+		{
+			carry = 0;
+		}
+
+		// create new node
+		Node* pNode = new Node( tmp );
+		assert( pNode );
+
+		// attach to result
+		if ( result.poHead )
+		{
+			assert( pResultTail );
+			pResultTail->pNext = pNode;
+		}
+		else
+		{
+			result.poHead = pNode;
+		}
+
+		// update the tail
+		pResultTail = pNode;
+	}
+
+	if ( carry == 1 )
+	{
+		pResultTail->pNext = new Node( 1 );
+		assert( pResultTail->pNext );
+	}
+
+	return result;
+}
+
 void LinkedList::RunTests_LinkedList( )
 {
 	std::cout << "Beginning LinkedList tests...";
@@ -297,6 +440,7 @@ void LinkedList::RunTests_LinkedList( )
 	LinkedList::DeleteMiddleTest( );
 	LinkedList::KthToLastTest( );
 	LinkedList::PartitionTest( );
+	LinkedList::ReversedSumTest( );
 
 	// assert that all dynamic allocations have been freed
 	assert( Node::nodeCount == 0 );
@@ -949,6 +1093,190 @@ void LinkedList::PartitionTest( )
 	pNode = pNode->pNext;
 
 	// we've reached the end of the list
+	assert( pNode == nullptr );
+}
+
+void LinkedList::ReversedSumTest( )
+{
+	// x = 617
+	LinkedList x;
+	x.AppendNodeToTail( 7 );
+	x.AppendNodeToTail( 1 );
+	x.AppendNodeToTail( 6 );
+
+	// y = 295
+	LinkedList y;
+	y.AppendNodeToTail( 5 );
+	y.AppendNodeToTail( 9 );
+	y.AppendNodeToTail( 2 );
+
+	// z = 12095
+	LinkedList z;
+	z.AppendNodeToTail( 5 );
+	z.AppendNodeToTail( 9 );
+	z.AppendNodeToTail( 0 );
+	z.AppendNodeToTail( 2 );
+	z.AppendNodeToTail( 1 );
+
+	// w = 423
+	LinkedList w;
+	w.AppendNodeToTail( 3 );
+	w.AppendNodeToTail( 2 );
+	w.AppendNodeToTail( 4 );
+
+	assert( Node::nodeCount == 14 );
+
+	////////////////////////
+	////// x + y ///////////
+	////////////////////////
+
+	LinkedList xy = x.ReverseSum( y ); // 912
+	Node* pNode = xy.poHead;
+
+	assert( pNode );
+	assert( pNode->data == 2 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 1 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 9 );
+	pNode = pNode->pNext;
+
+	// end of list
+	assert( pNode == nullptr );
+
+	////////////////////////
+	////// y + x ///////////
+	////////////////////////
+
+	LinkedList yx = y.ReverseSum( x ); // 912
+	pNode = yx.poHead;
+
+	assert( pNode );
+	assert( pNode->data == 2 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 1 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 9 );
+	pNode = pNode->pNext;
+
+	// end of list
+	assert( pNode == nullptr );
+
+	////////////////////////
+	////// x + z ///////////
+	////////////////////////
+
+	LinkedList xz = x.ReverseSum( z ); // 12712
+	pNode = xz.poHead;
+
+	assert( pNode );
+	assert( pNode->data == 2 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 1 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 7 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 2 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 1 );
+	pNode = pNode->pNext;
+
+	////////////////////////
+	////// x + z ///////////
+	////////////////////////
+
+	LinkedList zx = z.ReverseSum( x ); // 12712
+	pNode = zx.poHead;
+
+	assert( pNode );
+	assert( pNode->data == 2 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 1 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 7 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 2 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 1 );
+	pNode = pNode->pNext;
+
+	// end of list
+	assert( pNode == nullptr );
+
+	////////////////////////
+	////// x + w ///////////
+	////////////////////////
+
+	LinkedList xw = x.ReverseSum( w ); // 1040
+	pNode = xw.poHead;
+
+	assert( pNode );
+	assert( pNode->data == 0 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 4 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 0 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 1 );
+	pNode = pNode->pNext;
+
+	// end of list
+	assert( pNode == nullptr );
+
+	////////////////////////
+	////// w + x ///////////
+	////////////////////////
+
+	LinkedList wx = w.ReverseSum( x ); // 1040
+	pNode = wx.poHead;
+
+	assert( pNode );
+	assert( pNode->data == 0 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 4 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 0 );
+	pNode = pNode->pNext;
+
+	assert( pNode );
+	assert( pNode->data == 1 );
+	pNode = pNode->pNext;
+
+	// end of list
 	assert( pNode == nullptr );
 }
 
