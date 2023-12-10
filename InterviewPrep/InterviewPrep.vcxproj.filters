@@ -25,6 +25,9 @@
     <Filter Include="Source Files\ChapterTwo">
       <UniqueIdentifier>{c280497b-8bcc-429d-9292-f21f11d84985}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\_Tests">
+      <UniqueIdentifier>{09e04b1f-db85-40b7-87cf-46a8c5c8e13b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -65,6 +68,9 @@
     </ClCompile>
     <ClCompile Include="Node.cpp">
       <Filter>Source Files\ChapterTwo</Filter>
+    </ClCompile>
+    <ClCompile Include="LinkedListTests.cpp">
+      <Filter>Source Files\_Tests</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

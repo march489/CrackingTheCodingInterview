@@ -135,6 +135,7 @@
     <ClCompile Include="IsPermutation.cpp" />
     <ClCompile Include="IsUnique.cpp" />
     <ClCompile Include="LinkedList.cpp" />
+    <ClCompile Include="LinkedListTests.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="Node.cpp" />

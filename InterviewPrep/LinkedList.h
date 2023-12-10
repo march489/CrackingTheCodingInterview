@@ -15,13 +15,16 @@ class LinkedList
 	Node* FindNode( int k );
 	void ClearList( );
 
+	// EXERCISES
 	bool DeleteNode( int k );
 	void RemoveDuplicates( );
 	void DeleteMiddleNode( );
 	Node* KthToLast( int k ) const;
 	void Partition( int k );
 	LinkedList ReverseSum( const LinkedList& rhs ) const;
+	bool IsPalindrome( ) const;
 
+	// TESTS
 	static void RunTests_LinkedList( );
 	static void DeleteTest( );
 	static void RemoveDupsTest( );
@@ -29,6 +32,7 @@ class LinkedList
 	static void KthToLastTest( );
 	static void PartitionTest( );
 	static void ReversedSumTest( );
+	static void IsPalindromeTest( );
 
 	// data
 	private:
