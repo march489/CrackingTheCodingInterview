@@ -3,6 +3,7 @@
 #include <assert.h>
 #include <unordered_set>
 #include <stack>
+#include <deque>
 
 LinkedList::LinkedList( )
 	: poHead( nullptr )
@@ -433,25 +434,127 @@ LinkedList LinkedList::ReverseSum( const LinkedList& rhs ) const
 
 bool LinkedList::IsPalindrome( ) const
 {
-	std::stack<int> stack;
+	std::deque<int> deque;
+
 	Node* pNode = this->poHead;
 
 	while ( pNode )
 	{
-		if ( not stack.empty() && pNode->data == stack.top( ) )
-		{
-			stack.pop( );
-		}
-		else
-		{
-			// definitely incomplete
-			stack.push( pNode->data );
-		}
-		
+		deque.push_back( pNode->data );
 		pNode = pNode->pNext;
 	}
 
-	return stack.size( ) <= 1;
+	while ( deque.size( ) > 1 )
+	{
+		if ( deque.front( ) == deque.back( ) )
+		{
+			deque.pop_back( );
+			deque.pop_front( );
+		}
+		else
+		{
+			break;
+		}
+	}
+
+	return deque.size( ) <= 1;
+}
+
+bool LinkedList::IsPalindromeAlt( ) const
+{
+	auto CloneAndReverseList = [] ( const LinkedList& list )
+		{
+			Node* pNode = list.poHead;
+			Node* pNewHead = nullptr;
+			Node* tmp = nullptr;
+
+			while ( pNode )
+			{
+				tmp = new Node( pNode->data );
+				tmp->pNext = pNewHead;
+				pNewHead = tmp;
+
+				pNode = pNode->pNext;
+			}
+
+			LinkedList result;
+			result.poHead = pNewHead;
+
+			return result;
+		};
+
+	LinkedList listReversed = CloneAndReverseList( *this );
+
+	Node* pForward = this->poHead;
+	Node* pReverse = listReversed.poHead;
+
+	bool bIsPalindrome = true;
+
+	while ( pForward && bIsPalindrome )
+	{
+		bIsPalindrome = ( pForward->data == pReverse->data );
+		pForward = pForward->pNext;
+		pReverse = pReverse->pNext;
+	}
+
+	return bIsPalindrome;
+}
+
+std::optional<Node*> LinkedList::Intersect( const LinkedList& otherList ) const
+{
+	std::unordered_set<Node*> addresses;
+	std::optional<Node*> result;
+
+	Node* pNode = this->poHead;
+	while ( pNode )
+	{
+		addresses.insert( pNode );
+		pNode = pNode->pNext;
+	}
+
+	bool bUniqueInsertion = true;
+	pNode = otherList.poHead;
+	while ( pNode && bUniqueInsertion )
+	{
+		bUniqueInsertion = addresses.insert( pNode ).second;
+		if ( bUniqueInsertion )
+		{
+			pNode = pNode->pNext;
+		}
+		else
+		{
+			break;
+		}
+	}
+
+	if ( not bUniqueInsertion )
+	{
+		result.emplace( pNode );
+	}
+
+	return result;
+}
+
+std::optional<Node*> LinkedList::ContainsLoop( ) const
+{
+	std::unordered_set<Node*> addresses;
+
+	Node* pNode = this->poHead;
+	bool bUniqueInsertion = true;
+	while ( pNode )
+	{
+		bUniqueInsertion = addresses.insert( pNode ).second;
+		if ( bUniqueInsertion )
+		{
+			pNode = pNode->pNext;
+		}
+		else
+		{
+			break;
+		}
+	}
+
+	return bUniqueInsertion ? std::nullopt : std::optional<Node*>( std::in_place, pNode );
 }
 
 LinkedList::~LinkedList( )

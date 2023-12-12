@@ -15,6 +15,8 @@ void LinkedList::RunTests_LinkedList( )
 	LinkedList::PartitionTest( );
 	LinkedList::ReversedSumTest( );
 	LinkedList::IsPalindromeTest( );
+	LinkedList::IntersectionTest( );
+	LinkedList::ContainsLoopTest( );
 
 	// assert that all dynamic allocations have been freed
 	assert( Node::nodeCount == 0 );
@@ -868,11 +870,13 @@ void LinkedList::IsPalindromeTest( )
 
 	// even palindrome all the same
 	assert( A.IsPalindrome( ) );
+	assert( A.IsPalindromeAlt( ) );
 
 	A.AppendNodeToTail( 1 );
 
 	// odd palindrome all the same
 	assert( A.IsPalindrome( ) );
+	assert( A.IsPalindromeAlt( ) );
 
 	LinkedList B;
 	B.AppendNodeToTail( 1 );
@@ -888,6 +892,7 @@ void LinkedList::IsPalindromeTest( )
 	B.AppendNodeToTail( 1 );
 
 	assert( B.IsPalindrome( ) );
+	assert( B.IsPalindromeAlt( ) );
 
 	LinkedList C;
 	C.AppendNodeToTail( 1 );
@@ -903,6 +908,7 @@ void LinkedList::IsPalindromeTest( )
 	C.AppendNodeToTail( 1 );
 
 	assert( C.IsPalindrome( ) );
+	assert( C.IsPalindromeAlt( ) );
 
 	LinkedList D;
 	D.AppendNodeToTail( 1 );
@@ -917,10 +923,12 @@ void LinkedList::IsPalindromeTest( )
 	D.AppendNodeToTail( 1 );
 
 	assert( not D.IsPalindrome( ) );
+	assert( not D.IsPalindromeAlt( ) );
 
 	LinkedList E;
-	
+
 	assert( E.IsPalindrome( ) );
+	assert( E.IsPalindromeAlt( ) );
 
 	LinkedList F;
 
@@ -928,4 +936,121 @@ void LinkedList::IsPalindromeTest( )
 	F.AppendNodeToTail( 2 );
 
 	assert( not F.IsPalindrome( ) );
+	assert( not F.IsPalindromeAlt( ) );
+}
+
+void LinkedList::IntersectionTest( )
+{
+	LinkedList listA;
+	Node* pA = listA.AppendNodeToTail( 10 );
+	Node* pB = listA.AppendNodeToTail( 20 );
+	Node* pC = listA.AppendNodeToTail( 30 );
+	Node* pD = listA.AppendNodeToTail( 40 );
+	Node* pE = listA.AppendNodeToTail( 50 );
+
+	LinkedList listB;
+	Node* pF = listB.AppendNodeToTail( 10 );
+	Node* pG = listB.AppendNodeToTail( 20 );
+	Node* pH = listB.AppendNodeToTail( 30 );
+	Node* pI = listB.AppendNodeToTail( 40 );
+	Node* pJ = listB.AppendNodeToTail( 50 );
+
+	LinkedList listC;
+	Node* pK = listC.AppendNodeToTail( 10 );
+	pK->pNext = pC;
+
+	LinkedList listD;
+	Node* pL = listD.AppendNodeToTail( 10 );
+	Node* pM = listD.AppendNodeToTail( 15 );
+	Node* pN = listD.AppendNodeToTail( 20 );
+	Node* pO = listD.AppendNodeToTail( 25 );
+	pO->pNext = pC;
+
+	LinkedList listE;
+
+	std::optional<Node*> result;
+	assert( result == std::nullopt );
+
+	result = listA.Intersect( listB );
+	assert( result == std::nullopt );
+
+	result = listB.Intersect( listA );
+	assert( result == std::nullopt );
+
+	result = listA.Intersect( listC );
+	assert( result.value( ) == pC );
+
+	result = listC.Intersect( listA );
+	assert( result.value( ) == pC );
+
+	result = listA.Intersect( listD );
+	assert( result.value( ) == pC );
+
+	result = listD.Intersect( listA );
+	assert( result.value( ) == pC );
+
+	result = listA.Intersect( listE );
+	assert( result == std::nullopt );
+
+	result = listE.Intersect( listA );
+	assert( result == std::nullopt );
+
+	result = listA.Intersect( listA );
+	assert( result.value( ) == pA );
+
+	// TEARDOWN --> break connection to not screw up ownership & clean-up
+	pK->pNext = nullptr;
+	pO->pNext = nullptr;
+}
+
+void LinkedList::ContainsLoopTest( )
+{
+	LinkedList list;
+	Node* pA = list.AppendNodeToTail( 10 );
+	Node* pB = list.AppendNodeToTail( 20 );
+	Node* pC = list.AppendNodeToTail( 30 );
+	Node* pD = list.AppendNodeToTail( 40 );
+	Node* pE = list.AppendNodeToTail( 50 );
+	Node* pF = list.AppendNodeToTail( 60 );
+	Node* pG = list.AppendNodeToTail( 70 );
+	Node* pH = list.AppendNodeToTail( 80 );
+
+	// currently no loops
+	assert( pH->pNext == nullptr );
+	assert( std::nullopt == list.ContainsLoop( ) );
+
+	// cross wire
+	pH->pNext = pA;
+	assert( pA == list.ContainsLoop( ).value() );
+
+	// cross wire
+	pH->pNext = pB;
+	assert( pB == list.ContainsLoop( ).value( ) );
+
+	// cross wire
+	pH->pNext = pC;
+	assert( pC == list.ContainsLoop( ).value( ) );
+
+	// cross wire
+	pH->pNext = pD;
+	assert( pD == list.ContainsLoop( ).value( ) );
+
+	// cross wire
+	pH->pNext = pE;
+	assert( pE == list.ContainsLoop( ).value( ) );
+
+	// cross wire
+	pH->pNext = pF;
+	assert( pF == list.ContainsLoop( ).value( ) );
+
+	// cross wire
+	pH->pNext = pG;
+	assert( pG == list.ContainsLoop( ).value( ) );
+
+	// cross wire
+	pH->pNext = pH;
+	assert( pH == list.ContainsLoop( ).value( ) );
+
+	// teardown 
+	pH->pNext = nullptr;
 }

@@ -1,6 +1,8 @@
 #ifndef LINKED_LIST_H
 #define LINKED_LIST_H
 
+#include <optional>
+
 class Node;
 
 class LinkedList
@@ -23,6 +25,10 @@ class LinkedList
 	void Partition( int k );
 	LinkedList ReverseSum( const LinkedList& rhs ) const;
 	bool IsPalindrome( ) const;
+	bool IsPalindromeAlt( ) const;
+	std::optional<Node*> Intersect( const LinkedList& otherList ) const;
+	std::optional<Node*> ContainsLoop( ) const;
+	//std::optional<Node*> ContainsLoopAlt( ) const;
 
 	// TESTS
 	static void RunTests_LinkedList( );
@@ -33,6 +39,8 @@ class LinkedList
 	static void PartitionTest( );
 	static void ReversedSumTest( );
 	static void IsPalindromeTest( );
+	static void IntersectionTest( );
+	static void ContainsLoopTest( );
 
 	// data
 	private:
