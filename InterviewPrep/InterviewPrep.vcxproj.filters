@@ -28,6 +28,12 @@
     <Filter Include="Source Files\_Tests">
       <UniqueIdentifier>{09e04b1f-db85-40b7-87cf-46a8c5c8e13b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\ChapterThree">
+      <UniqueIdentifier>{b3559316-1e60-4a82-8409-b282b6c02848}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ChapterThree">
+      <UniqueIdentifier>{19578cea-2cd2-4d54-9a0e-80480b6e8552}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -72,6 +78,15 @@
     <ClCompile Include="LinkedListTests.cpp">
       <Filter>Source Files\_Tests</Filter>
     </ClCompile>
+    <ClCompile Include="StackNode.cpp">
+      <Filter>Source Files\ChapterThree</Filter>
+    </ClCompile>
+    <ClCompile Include="MyStack.cpp">
+      <Filter>Source Files\ChapterThree</Filter>
+    </ClCompile>
+    <ClCompile Include="MinStackNode.cpp">
+      <Filter>Source Files\ChapterThree</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ChapterOne.h">
@@ -109,6 +124,15 @@
     </ClInclude>
     <ClInclude Include="Node.h">
       <Filter>Header Files\ChapterTwo</Filter>
+    </ClInclude>
+    <ClInclude Include="StackNode.h">
+      <Filter>Header Files\ChapterThree</Filter>
+    </ClInclude>
+    <ClInclude Include="MyStack.h">
+      <Filter>Header Files\ChapterThree</Filter>
+    </ClInclude>
+    <ClInclude Include="MinStackNode.h">
+      <Filter>Header Files\ChapterThree</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -138,9 +138,12 @@
     <ClCompile Include="LinkedListTests.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Matrix.cpp" />
+    <ClCompile Include="MinStackNode.cpp" />
+    <ClCompile Include="MyStack.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="OneAway.cpp" />
     <ClCompile Include="PalindromePermutation.cpp" />
+    <ClCompile Include="StackNode.cpp" />
     <ClCompile Include="StringCompression.cpp" />
     <ClCompile Include="StringRotation.cpp" />
     <ClCompile Include="URLify.cpp" />
@@ -152,9 +155,12 @@
     <ClInclude Include="IsUnique.h" />
     <ClInclude Include="LinkedList.h" />
     <ClInclude Include="Matrix.h" />
+    <ClInclude Include="MinStackNode.h" />
+    <ClInclude Include="MyStack.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="OneAway.h" />
     <ClInclude Include="PalindromePermutation.h" />
+    <ClInclude Include="StackNode.h" />
     <ClInclude Include="StringCompression.h" />
     <ClInclude Include="StringRotation.h" />
     <ClInclude Include="URLify.h" />
