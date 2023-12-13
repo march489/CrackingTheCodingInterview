@@ -13,6 +13,7 @@ public:
 	virtual ~MinStack( );
 
 	int min( ) const;
+	void sort( );
 	virtual void push( int item ) override;
 };
 

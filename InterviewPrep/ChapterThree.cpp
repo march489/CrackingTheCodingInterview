@@ -130,6 +130,60 @@ void RunTests_ChapterThree( )
 
 	assert( stack.isEmpty( ) );
 
+	// sort test
+
+	stack.push( 12 );
+	stack.push( 14 );
+	stack.push( 11 );
+	stack.push( 9 );
+	stack.push( 20 );
+	stack.push( 18 );
+	stack.push( 3 );
+	stack.push( 24 );
+	stack.push( 11 );
+	stack.push( 9 );
+
+	assert( stack.size( ) == 10 );
+
+	stack.sort( );
+
+	assert( stack.size( ) == 10 );
+
+	int val;
+
+	val = stack.pop( );
+	assert( val == 3 );
+
+	val = stack.pop( );
+	assert( val == 9 );
+
+	val = stack.pop( );
+	assert( val == 9 );
+
+	val = stack.pop( );
+	assert( val == 11 );
+
+	val = stack.pop( );
+	assert( val == 11 );
+
+	val = stack.pop( );
+	assert( val == 12 );
+
+	val = stack.pop( );
+	assert( val == 14 );
+
+	val = stack.pop( );
+	assert( val == 18 );
+
+	val = stack.pop( );
+	assert( val == 20 );
+
+	val = stack.pop( );
+	assert( val == 24 );
+
+	assert( stack.isEmpty( ) );
+	assert( stack.size( ) == 0 );
+
 	/////////////////////////////
 	////// STACK OF PLATES //////
 	/////////////////////////////
