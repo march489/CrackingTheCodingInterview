@@ -34,6 +34,12 @@
     <Filter Include="Source Files\ChapterThree">
       <UniqueIdentifier>{19578cea-2cd2-4d54-9a0e-80480b6e8552}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\ChapterFour">
+      <UniqueIdentifier>{70a25f86-e46a-4087-bd0d-3d99de326f04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ChapterFour">
+      <UniqueIdentifier>{884f08c9-e13d-4323-9b0f-342f7b65f562}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -83,6 +89,27 @@
     </ClCompile>
     <ClCompile Include="MinStack.cpp">
       <Filter>Source Files\ChapterThree</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimalShelter.cpp">
+      <Filter>Source Files\ChapterThree</Filter>
+    </ClCompile>
+    <ClCompile Include="BinaryHeap.cpp">
+      <Filter>Source Files\ChapterFour</Filter>
+    </ClCompile>
+    <ClCompile Include="ChapterFour.cpp">
+      <Filter>Source Files\ChapterFour</Filter>
+    </ClCompile>
+    <ClCompile Include="BinaryTreeNode.cpp">
+      <Filter>Source Files\ChapterFour</Filter>
+    </ClCompile>
+    <ClCompile Include="BinaryHeapTests.cpp">
+      <Filter>Source Files\_Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphNode.cpp">
+      <Filter>Source Files\ChapterFour</Filter>
+    </ClCompile>
+    <ClCompile Include="Graph.cpp">
+      <Filter>Source Files\ChapterFour</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +166,24 @@
     </ClInclude>
     <ClInclude Include="StackOfPlates.h">
       <Filter>Header Files\ChapterThree</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimalShelter.h">
+      <Filter>Header Files\ChapterThree</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryHeap.h">
+      <Filter>Header Files\ChapterFour</Filter>
+    </ClInclude>
+    <ClInclude Include="ChapterFour.h">
+      <Filter>Header Files\ChapterFour</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryTreeNode.h">
+      <Filter>Header Files\ChapterFour</Filter>
+    </ClInclude>
+    <ClInclude Include="Graph.h">
+      <Filter>Header Files\ChapterFour</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphNode.h">
+      <Filter>Header Files\ChapterFour</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

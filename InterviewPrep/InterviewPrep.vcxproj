@@ -130,9 +130,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AnimalShelter.cpp" />
+    <ClCompile Include="BinaryHeap.cpp" />
+    <ClCompile Include="BinaryHeapTests.cpp" />
+    <ClCompile Include="ChapterFour.cpp" />
     <ClCompile Include="ChapterOne.cpp" />
     <ClCompile Include="ChapterThree.cpp" />
     <ClCompile Include="ChapterTwo.cpp" />
+    <ClCompile Include="Graph.cpp" />
+    <ClCompile Include="GraphNode.cpp" />
     <ClCompile Include="IsPermutation.cpp" />
     <ClCompile Include="IsUnique.cpp" />
     <ClCompile Include="LinkedList.cpp" />
@@ -145,12 +151,18 @@
     <ClCompile Include="PalindromePermutation.cpp" />
     <ClCompile Include="StringCompression.cpp" />
     <ClCompile Include="StringRotation.cpp" />
+    <ClCompile Include="BinaryTreeNode.cpp" />
     <ClCompile Include="URLify.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnimalShelter.h" />
+    <ClInclude Include="BinaryHeap.h" />
+    <ClInclude Include="ChapterFour.h" />
     <ClInclude Include="ChapterOne.h" />
     <ClInclude Include="ChapterThree.h" />
     <ClInclude Include="ChapterTwo.h" />
+    <ClInclude Include="Graph.h" />
+    <ClInclude Include="GraphNode.h" />
     <ClInclude Include="IsPermutation.h" />
     <ClInclude Include="IsUnique.h" />
     <ClInclude Include="LinkedList.h" />
@@ -165,6 +177,7 @@
     <ClInclude Include="StackOfPlates.h" />
     <ClInclude Include="StringCompression.h" />
     <ClInclude Include="StringRotation.h" />
+    <ClInclude Include="BinaryTreeNode.h" />
     <ClInclude Include="URLify.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,6 +1,7 @@
 #include "ChapterThree.h"
 #include "MinStack.h"
 #include "StackOfPlates.h"
+#include "AnimalShelter.h"
 #include <iostream>
 #include <assert.h>
 
@@ -283,6 +284,67 @@ void RunTests_ChapterThree( )
 	pStack = plates.pTopStack;
 	assert( pStack );
 	assert( pStack->size( ) == 4 );
+
+
+	/////////////////////////////
+	////// ANIMAL SHELTER ///////
+	/////////////////////////////
+
+	AnimalShelter shelter;
+	assert( shelter.isEmpty( ) );
+	assert( shelter.size( ) == 0 );
+
+	Animal rover( "Rover", Animal::Type::DOG );
+	Animal fluffy( "Fluffy", Animal::Type::CAT );
+	Animal cici( "Cici", Animal::Type::CAT );
+	Animal fiona( "Fiona", Animal::Type::CAT );
+	Animal mango( "Mango", Animal::Type::DOG );
+	Animal archie( "Archie", Animal::Type::DOG );
+	Animal lola( "Lola", Animal::Type::DOG );
+	Animal luna( "Luna", Animal::Type::CAT );
+
+	shelter.Enqueue( &rover );
+	shelter.Enqueue( &fluffy );
+	shelter.Enqueue( &cici );
+	shelter.Enqueue( &fiona );
+	shelter.Enqueue( &mango );
+	shelter.Enqueue( &archie );
+	shelter.Enqueue( &lola );
+	shelter.Enqueue( &luna );
+
+	assert( shelter.size( ) == 8 );
+
+	Animal* pAnimal{ nullptr };
+
+	pAnimal = shelter.DequeueCat( );
+	assert( pAnimal );
+	assert( pAnimal->type == Animal::Type::CAT );
+	assert( pAnimal->name == "Fluffy" );
+	assert( shelter.size( ) == 7 );
+
+	pAnimal = shelter.DequeueAny( );
+	assert( pAnimal );
+	assert( pAnimal->type == Animal::Type::DOG );
+	assert( pAnimal->name == "Rover" );
+	assert( shelter.size( ) == 6 );
+
+	pAnimal = shelter.DequeueDog( );
+	assert( pAnimal );
+	assert( pAnimal->type == Animal::Type::DOG );
+	assert( pAnimal->name == "Mango" );
+	assert( shelter.size( ) == 5 );
+
+	pAnimal = shelter.DequeueDog( );
+	assert( pAnimal );
+	assert( pAnimal->type == Animal::Type::DOG );
+	assert( pAnimal->name == "Archie" );
+	assert( shelter.size( ) == 4 );
+
+	pAnimal = shelter.DequeueCat( );
+	assert( pAnimal );
+	assert( pAnimal->type == Animal::Type::CAT );
+	assert( pAnimal->name == "Cici" );
+	assert( shelter.size( ) == 3 );
 
 	std::cout << " all tests passed" << std::endl;
 }
