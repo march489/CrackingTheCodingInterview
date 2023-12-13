@@ -17,10 +17,18 @@ public:
 
 	friend MyStack;
 
-protected:
+public:
 	// Data
 	StackNode<T>* pNext;
 	T data;
 };
+
+template<typename T>
+StackNode<T>::StackNode( T in )
+	: data{ in }, pNext{ nullptr }
+{
+
+}
+
 
 #endif

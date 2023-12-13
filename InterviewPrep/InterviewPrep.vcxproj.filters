@@ -78,13 +78,10 @@
     <ClCompile Include="LinkedListTests.cpp">
       <Filter>Source Files\_Tests</Filter>
     </ClCompile>
-    <ClCompile Include="StackNode.cpp">
+    <ClCompile Include="ChapterThree.cpp">
       <Filter>Source Files\ChapterThree</Filter>
     </ClCompile>
-    <ClCompile Include="MyStack.cpp">
-      <Filter>Source Files\ChapterThree</Filter>
-    </ClCompile>
-    <ClCompile Include="MinStackNode.cpp">
+    <ClCompile Include="MinStack.cpp">
       <Filter>Source Files\ChapterThree</Filter>
     </ClCompile>
   </ItemGroup>
@@ -132,6 +129,15 @@
       <Filter>Header Files\ChapterThree</Filter>
     </ClInclude>
     <ClInclude Include="MinStackNode.h">
+      <Filter>Header Files\ChapterThree</Filter>
+    </ClInclude>
+    <ClInclude Include="MinStack.h">
+      <Filter>Header Files\ChapterThree</Filter>
+    </ClInclude>
+    <ClInclude Include="ChapterThree.h">
+      <Filter>Header Files\ChapterThree</Filter>
+    </ClInclude>
+    <ClInclude Include="StackOfPlates.h">
       <Filter>Header Files\ChapterThree</Filter>
     </ClInclude>
   </ItemGroup>
