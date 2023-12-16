@@ -14,7 +14,7 @@ public:
 	GraphNode& operator=( const GraphNode& in );
 	~GraphNode( );
 
-	GraphNode( std::string _name );
+	GraphNode( std::string _name, int _data );
 
 	bool IsNeighbor( GraphNode* pNeighbor );
 	std::string GetName( ) const;
@@ -31,5 +31,6 @@ public:
 private:
 	std::string name;
 	std::unordered_set<GraphNode*> neighbors;
+	int data;
 };
 #endif // !GRAPH_NODE_H

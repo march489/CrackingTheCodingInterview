@@ -14,13 +14,31 @@ public:
 	Graph& operator=( const Graph& ) = delete;
 	~Graph( );
 
-	GraphNode* AddNode( std::string name ); 
+	GraphNode* AddNode( std::string name, int data );
 	void AddEdge( GraphNode* a, GraphNode* b );
 
 	void RemoveNode( GraphNode* pNode );
 	void RemoveEdge( GraphNode* a, GraphNode* b );
 
+	void SetRoot( GraphNode* a );
+	GraphNode* GetRoot( ) const;
+
+	// searches 
+	void ForEach_DepthFirst( void ( GraphNode::* fptr )( void ) const );
+	void ForEach_BreadthFirst( void( GraphNode::* fptr )( void ) const );
+
+	std::vector<GraphNode*>* FindShortestPath( GraphNode* pStart, GraphNode* pFinish );
+
+	void Print( const char* const pName ) const;
+	static void RunTests_GraphBasics( );
+
+private:
+	void privForEach_DFS( void( GraphNode::* fptr )( void ) const,
+						  GraphNode* pNode,
+						  std::unordered_set<GraphNode*>& visitedNodes );
+
 private:
 	std::unordered_set<GraphNode*> nodes;
+	GraphNode* pRoot;
 };
 #endif // !GRAPH_H
