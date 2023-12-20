@@ -5,6 +5,7 @@
 #include <unordered_set>
 
 class Graph;
+class DiGraph;
 
 class GraphNode
 {
@@ -22,11 +23,12 @@ public:
 
 	void AddNeighbor( GraphNode* pNeighbor );
 	void RemoveNeighbor( GraphNode* pNeighbor );
-	
+
 	void Print( ) const;
 	static void RunTests_GraphNodes( );
 
 	friend Graph;
+	friend DiGraph;
 
 private:
 	std::string name;

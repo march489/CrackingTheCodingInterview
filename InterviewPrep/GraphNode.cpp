@@ -27,11 +27,6 @@ GraphNode& GraphNode::operator=( const GraphNode& in )
 
 GraphNode::~GraphNode( )
 {
-	for ( auto it = this->neighbors.begin( ); it != this->neighbors.end( ); it++ )
-	{
-		( *it )->RemoveNeighbor( this );
-	}
-
 	this->neighbors.clear( );
 }
 

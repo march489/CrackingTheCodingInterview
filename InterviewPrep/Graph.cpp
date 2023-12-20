@@ -100,7 +100,6 @@ void Graph::ForEach_BreadthFirst( void( GraphNode::* fptr )( void ) const )
 std::vector<GraphNode*>* Graph::FindShortestPath( GraphNode* pStart, GraphNode* pFinish )
 {
 	std::unordered_map<GraphNode*, GraphNode*> predecessors;
-	//typedef std::tuple<GraphNode*, GraphNode*> ToFromPair;
 
 	std::queue<GraphNode*> queue;
 	std::unordered_set<GraphNode*> visitedNodes;
@@ -222,6 +221,40 @@ void Graph::RunTests_GraphBasics( )
 
 	delete pShortestPath;
 	pShortestPath = nullptr;
+
+	std::cout << "\nLet's remove a node: Sue...\n";
+	graph.RemoveNode( pSue );
+
+	graph.Print( "Graph minus Sue" );
+
+	std::cout << "\nShortest Path from MsPacMan to Blinky:\n";
+	pShortestPath = graph.FindShortestPath( pMsPacMan, pBlinky );
+	assert( pShortestPath );
+
+	for ( size_t index = 0; index < pShortestPath->size( ); index++ )
+	{
+		( *pShortestPath )[index]->Print( );
+	}
+
+	delete pShortestPath; 
+	pShortestPath = nullptr;
+
+	graph.RemoveNode( pInky );
+	graph.Print( "Graph minus Sue & Inky" );
+
+	std::cout << "\nShortest Path from MsPacMan to Pinky --> should be nothing:\n";
+	pShortestPath = graph.FindShortestPath( pMsPacMan, pPinky );
+	assert( pShortestPath->empty( ) );
+
+	delete pShortestPath;
+	pShortestPath = nullptr;
+
+	std::cout << "\nShortest Path from Pinky to MsPacman --> should be nothing:\n";
+	pShortestPath = graph.FindShortestPath( pPinky, pMsPacMan );
+	assert( pShortestPath->empty( ) );
+
+	delete pShortestPath;
+	pShortestPath = nullptr;
 }
 
 void Graph::privForEach_DFS( void( GraphNode::* fptr )( void ) const, GraphNode* pNode, std::unordered_set<GraphNode*>& visitedNodes )
@@ -242,6 +275,12 @@ void Graph::privForEach_DFS( void( GraphNode::* fptr )( void ) const, GraphNode*
 void Graph::RemoveNode( GraphNode* pNode )
 {
 	this->nodes.erase( pNode );
+
+	for ( GraphNode* pVertex : this->nodes )
+	{
+		pVertex->RemoveNeighbor( pNode );
+	}
+
 	delete pNode;
 }
 

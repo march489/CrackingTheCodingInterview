@@ -12,13 +12,13 @@ public:
 	Graph( );
 	Graph( const Graph& ) = delete;
 	Graph& operator=( const Graph& ) = delete;
-	~Graph( );
+	virtual ~Graph( );
 
 	GraphNode* AddNode( std::string name, int data );
-	void AddEdge( GraphNode* a, GraphNode* b );
+	virtual void AddEdge( GraphNode* a, GraphNode* b );
 
 	void RemoveNode( GraphNode* pNode );
-	void RemoveEdge( GraphNode* a, GraphNode* b );
+	virtual void RemoveEdge( GraphNode* a, GraphNode* b );
 
 	void SetRoot( GraphNode* a );
 	GraphNode* GetRoot( ) const;
@@ -37,7 +37,7 @@ private:
 						  GraphNode* pNode,
 						  std::unordered_set<GraphNode*>& visitedNodes );
 
-private:
+protected:
 	std::unordered_set<GraphNode*> nodes;
 	GraphNode* pRoot;
 };

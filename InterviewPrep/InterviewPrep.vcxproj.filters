@@ -117,6 +117,9 @@
     <ClCompile Include="BinaryTreeTests.cpp">
       <Filter>Source Files\_Tests</Filter>
     </ClCompile>
+    <ClCompile Include="DiGraph.cpp">
+      <Filter>Source Files\ChapterFour</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ChapterOne.h">
@@ -192,6 +195,9 @@
       <Filter>Header Files\ChapterFour</Filter>
     </ClInclude>
     <ClInclude Include="BinaryTree.h">
+      <Filter>Header Files\ChapterFour</Filter>
+    </ClInclude>
+    <ClInclude Include="DiGraph.h">
       <Filter>Header Files\ChapterFour</Filter>
     </ClInclude>
   </ItemGroup>
