@@ -10,9 +10,22 @@ public:
 	~BinaryTreeNode( );		// we'll see
 
 	BinaryTreeNode( int _data );
+	
+	BinaryTreeNode* GetLeftChild( );
+	BinaryTreeNode* GetRightChild( );
+	BinaryTreeNode* GetParent( );
+
+	void SetLeftChild( BinaryTreeNode* );
+	void SetRightChild( BinaryTreeNode* );
+	void SetParent( BinaryTreeNode* );
+
+	int height( ) const;
+
+	void Print( );
 
 public:
 	// data
+	BinaryTreeNode* parent;
 	BinaryTreeNode* leftChild;
 	BinaryTreeNode* rightChild;
 	int data;

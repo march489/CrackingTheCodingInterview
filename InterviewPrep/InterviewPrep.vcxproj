@@ -133,6 +133,8 @@
     <ClCompile Include="AnimalShelter.cpp" />
     <ClCompile Include="BinaryHeap.cpp" />
     <ClCompile Include="BinaryHeapTests.cpp" />
+    <ClCompile Include="BinaryTree.cpp" />
+    <ClCompile Include="BinaryTreeTests.cpp" />
     <ClCompile Include="ChapterFour.cpp" />
     <ClCompile Include="ChapterOne.cpp" />
     <ClCompile Include="ChapterThree.cpp" />
@@ -157,6 +159,7 @@
   <ItemGroup>
     <ClInclude Include="AnimalShelter.h" />
     <ClInclude Include="BinaryHeap.h" />
+    <ClInclude Include="BinaryTree.h" />
     <ClInclude Include="ChapterFour.h" />
     <ClInclude Include="ChapterOne.h" />
     <ClInclude Include="ChapterThree.h" />
