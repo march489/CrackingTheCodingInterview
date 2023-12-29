@@ -2,7 +2,7 @@
 
 GraphNode::GraphNode( std::string _name, int _data )
 	: name( _name ),
-	neighbors( std::unordered_set<GraphNode*>( ) ),
+	outNeighbors( std::unordered_set<GraphNode*>( ) ),
 	data( _data )
 {
 
@@ -10,7 +10,7 @@ GraphNode::GraphNode( std::string _name, int _data )
 
 GraphNode::GraphNode( const GraphNode& in )
 	: name( in.name ),
-	neighbors( std::unordered_set<GraphNode*>( ) ),
+	outNeighbors( std::unordered_set<GraphNode*>( ) ),
 	data( in.data )
 {
 
@@ -20,19 +20,19 @@ GraphNode& GraphNode::operator=( const GraphNode& in )
 {
 	this->name = in.name;
 	this->data = in.data;
-	this->neighbors.clear( );
+	this->outNeighbors.clear( );
 
 	return *this;
 }
 
 GraphNode::~GraphNode( )
 {
-	this->neighbors.clear( );
+	this->outNeighbors.clear( );
 }
 
-bool GraphNode::IsNeighbor( GraphNode* pNeighbor )
+bool GraphNode::IsOutNeighbor( GraphNode* pNeighbor ) const
 {
-	return this->neighbors.contains( pNeighbor );
+	return this->outNeighbors.contains( pNeighbor );
 }
 
 std::string GraphNode::GetName( ) const
@@ -40,27 +40,27 @@ std::string GraphNode::GetName( ) const
 	return this->name;
 }
 
-size_t GraphNode::NumNeighbors( ) const
+size_t GraphNode::GetOutDegree( ) const
 {
-	return this->neighbors.size( );
+	return this->outNeighbors.size( );
 }
 
-void GraphNode::AddNeighbor( GraphNode* pNeighbor )
+void GraphNode::AddOutNeighbor( GraphNode* pNeighbor )
 {
-	this->neighbors.insert( pNeighbor );
+	this->outNeighbors.insert( pNeighbor );
 }
 
-void GraphNode::RemoveNeighbor( GraphNode* pNeighbor )
+void GraphNode::RemoveOutNeighbor( GraphNode* pNeighbor )
 {
-	this->neighbors.erase( pNeighbor );
+	this->outNeighbors.erase( pNeighbor );
 }
 
 void GraphNode::Print( ) const
 {
 	printf( "%p: %s (%d)\n\tneighbors: ", this, this->name.c_str( ), this->data );
-	for ( auto it = this->neighbors.begin( ); it != this->neighbors.end( ); it++ )
+	for ( auto it = this->outNeighbors.begin( ); it != this->outNeighbors.end( ); it++ )
 	{
-		if ( it != this->neighbors.begin( ) )
+		if ( it != this->outNeighbors.begin( ) )
 		{
 			printf( ", " );
 		}
@@ -78,11 +78,11 @@ void GraphNode::RunTests_GraphNodes( )
 	GraphNode fall( "Fall", 5 );
 
 	// create connections
-	winter.AddNeighbor( &spring );
-	spring.AddNeighbor( &winter );
+	winter.AddOutNeighbor( &spring );
+	spring.AddOutNeighbor( &winter );
 
-	winter.AddNeighbor( &summer );
-	summer.AddNeighbor( &winter );
+	winter.AddOutNeighbor( &summer );
+	summer.AddOutNeighbor( &winter );
 
 	winter.Print( );
 	spring.Print( );

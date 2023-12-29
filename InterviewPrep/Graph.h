@@ -15,10 +15,10 @@ public:
 	virtual ~Graph( );
 
 	GraphNode* AddNode( std::string name, int data );
-	virtual void AddEdge( GraphNode* a, GraphNode* b );
+	void AddEdge( GraphNode* a, GraphNode* b );
 
 	void RemoveNode( GraphNode* pNode );
-	virtual void RemoveEdge( GraphNode* a, GraphNode* b );
+	void RemoveEdge( GraphNode* a, GraphNode* b );
 
 	void SetRoot( GraphNode* a );
 	GraphNode* GetRoot( ) const;

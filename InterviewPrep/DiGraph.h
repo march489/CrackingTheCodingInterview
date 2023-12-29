@@ -1,9 +1,10 @@
 #ifndef DIGRAPH_H
 #define DIGRAPH_H
 
-#include <unordered_set>
 #include <iostream>
 #include "Graph.h"
+
+class DiGraphNode;
 
 class DiGraph : public Graph
 {
@@ -13,10 +14,13 @@ public:
 	DiGraph& operator=( const DiGraph& ) = delete;
 	virtual ~DiGraph( );
 
-	virtual void AddEdge( GraphNode* pSrc, GraphNode* pDest ) override;
-	virtual void RemoveEdge( GraphNode* pSrc, GraphNode* pDest ) override;
+	void AddEdge( DiGraphNode* pSrc, DiGraphNode* pDest );
+	void RemoveEdge( DiGraphNode* pSrc, DiGraphNode* pDest );
 
-	std::vector<GraphNode*>* BuildOrder( ) const;
+	DiGraphNode* AddNode( std::string name, int data );
+	void RemoveNode( DiGraphNode* pNode );
+
+	std::vector<std::string>* CreateBuildOrder( ); 	// consumes digraph
 
 	static void RunTests_DiGraph( );
 };

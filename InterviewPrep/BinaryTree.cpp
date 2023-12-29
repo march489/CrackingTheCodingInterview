@@ -182,6 +182,26 @@ void BinaryTree::BFS( void ( BinaryTreeNode::* fptr ) ( void ) )
 	}
 }
 
+BinaryTreeNode* BinaryTree::MRCA( BinaryTreeNode* pA, BinaryTreeNode* pB ) const
+{
+	std::unordered_set<BinaryTreeNode*> ancestors = std::unordered_set<BinaryTreeNode*>( );
+
+	BinaryTreeNode* pCursor = pA;
+	while ( pCursor )
+	{
+		ancestors.insert( pCursor );
+		pCursor = pCursor->parent;
+	}
+
+	pCursor = pB;
+	while ( pCursor and ( not ancestors.contains( pCursor ) ) )
+	{
+		pCursor = pCursor->parent;
+	}
+
+	return pCursor;
+}
+
 std::vector<std::list<BinaryTreeNode*>>* BinaryTree::NodesByDepth( ) const
 {
 	std::vector<std::list<BinaryTreeNode*>>* pResult = new std::vector<std::list<BinaryTreeNode*>>( );

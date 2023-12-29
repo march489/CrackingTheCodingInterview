@@ -38,14 +38,14 @@ GraphNode* Graph::AddNode( std::string name, int data )
 
 void Graph::AddEdge( GraphNode* a, GraphNode* b )
 {
-	a->AddNeighbor( b );
-	b->AddNeighbor( a );
+	a->AddOutNeighbor( b );
+	b->AddOutNeighbor( a );
 }
 
 void Graph::RemoveEdge( GraphNode* a, GraphNode* b )
 {
-	a->RemoveNeighbor( b );
-	b->RemoveNeighbor( a );
+	a->RemoveOutNeighbor( b );
+	b->RemoveOutNeighbor( a );
 }
 
 void Graph::SetRoot( GraphNode* a )
@@ -89,7 +89,7 @@ void Graph::ForEach_BreadthFirst( void( GraphNode::* fptr )( void ) const )
 		if ( bNotPreviouslyVisited )
 		{
 			std::invoke( fptr, pNode );
-			for ( auto it = pNode->neighbors.begin( ); it != pNode->neighbors.end( ); it++ )
+			for ( auto it = pNode->outNeighbors.begin( ); it != pNode->outNeighbors.end( ); it++ )
 			{
 				queue.push( *it );
 			}
@@ -122,7 +122,7 @@ std::vector<GraphNode*>* Graph::FindShortestPath( GraphNode* pStart, GraphNode* 
 
 		if ( bNotPreviouslyVisited )
 		{
-			for ( auto it = pNode->neighbors.begin( ); it != pNode->neighbors.end( ); it++ )
+			for ( auto it = pNode->outNeighbors.begin( ); it != pNode->outNeighbors.end( ); it++ )
 			{
 				// only add a predecessor if it doesn't already have one
 				// a previous one is linked to a shorter path,
@@ -265,7 +265,7 @@ void Graph::privForEach_DFS( void( GraphNode::* fptr )( void ) const, GraphNode*
 	{
 		std::invoke( fptr, pNode );
 
-		for ( auto it = pNode->neighbors.begin( ); it != pNode->neighbors.end( ); it++ )
+		for ( auto it = pNode->outNeighbors.begin( ); it != pNode->outNeighbors.end( ); it++ )
 		{
 			privForEach_DFS( fptr, ( *it ), visitedNodes );
 		}
@@ -278,7 +278,7 @@ void Graph::RemoveNode( GraphNode* pNode )
 
 	for ( GraphNode* pVertex : this->nodes )
 	{
-		pVertex->RemoveNeighbor( pNode );
+		pVertex->RemoveOutNeighbor( pNode );
 	}
 
 	delete pNode;

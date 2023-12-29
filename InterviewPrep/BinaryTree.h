@@ -22,6 +22,7 @@ public:
 	void DFS( void ( BinaryTreeNode::* fptr ) ( void ) );
 	void BFS( void ( BinaryTreeNode::* fptr ) ( void ) );
 
+	BinaryTreeNode* MRCA( BinaryTreeNode* pA, BinaryTreeNode* pB ) const;
 	std::vector<std::list<BinaryTreeNode*>>* NodesByDepth( ) const;
 	int height( ) const;
 	bool IsBalanced( ) const;

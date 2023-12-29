@@ -13,16 +13,16 @@ public:
 	GraphNode( ) = delete;
 	GraphNode( const GraphNode& in );
 	GraphNode& operator=( const GraphNode& in );
-	~GraphNode( );
+	virtual ~GraphNode( );
 
 	GraphNode( std::string _name, int _data );
 
-	bool IsNeighbor( GraphNode* pNeighbor );
+	bool IsOutNeighbor( GraphNode* pNeighbor ) const;
 	std::string GetName( ) const;
-	size_t NumNeighbors( ) const;
+	size_t GetOutDegree( ) const;
 
-	void AddNeighbor( GraphNode* pNeighbor );
-	void RemoveNeighbor( GraphNode* pNeighbor );
+	void AddOutNeighbor( GraphNode* pNeighbor );
+	void RemoveOutNeighbor( GraphNode* pNeighbor );
 
 	void Print( ) const;
 	static void RunTests_GraphNodes( );
@@ -30,9 +30,11 @@ public:
 	friend Graph;
 	friend DiGraph;
 
-private:
+protected:
 	std::string name;
-	std::unordered_set<GraphNode*> neighbors;
+	std::unordered_set<GraphNode*> outNeighbors;
 	int data;
 };
+
+
 #endif // !GRAPH_NODE_H

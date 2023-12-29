@@ -140,6 +140,8 @@
     <ClCompile Include="ChapterThree.cpp" />
     <ClCompile Include="ChapterTwo.cpp" />
     <ClCompile Include="DiGraph.cpp" />
+    <ClCompile Include="DiGraphNode.cpp" />
+    <ClCompile Include="DiGraphTests.cpp" />
     <ClCompile Include="Graph.cpp" />
     <ClCompile Include="GraphNode.cpp" />
     <ClCompile Include="IsPermutation.cpp" />
@@ -166,6 +168,7 @@
     <ClInclude Include="ChapterThree.h" />
     <ClInclude Include="ChapterTwo.h" />
     <ClInclude Include="DiGraph.h" />
+    <ClInclude Include="DiGraphNode.h" />
     <ClInclude Include="Graph.h" />
     <ClInclude Include="GraphNode.h" />
     <ClInclude Include="IsPermutation.h" />

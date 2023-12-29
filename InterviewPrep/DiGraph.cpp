@@ -1,6 +1,7 @@
 #include "DiGraph.h"
-#include "GraphNode.h"
+#include "DiGraphNode.h"
 #include <assert.h>
+#include <algorithm>
 
 DiGraph::DiGraph( )
 	: Graph( )
@@ -13,41 +14,100 @@ DiGraph::~DiGraph( )
 	//Graph::~Graph( );
 }
 
-void DiGraph::AddEdge( GraphNode* pSrc, GraphNode* pDest )
+void DiGraph::AddEdge( DiGraphNode* pSrc, DiGraphNode* pDest )
 {
 	if ( this->nodes.contains( pSrc ) and this->nodes.contains( pDest ) )
 	{
-		pSrc->AddNeighbor( pDest );
+		pSrc->AddOutNeighbor( pDest );
+		pDest->AddInNeighbor( pSrc );
 	}
 }
 
-void DiGraph::RemoveEdge( GraphNode* pSrc, GraphNode* pDest )
+void DiGraph::RemoveEdge( DiGraphNode* pSrc, DiGraphNode* pDest )
 {
 	if ( this->nodes.contains( pSrc ) and this->nodes.contains( pDest ) )
 	{
-		pSrc->RemoveNeighbor( pDest );
+		pSrc->RemoveOutNeighbor( pDest );
+		pDest->RemoveInNeighbor( pSrc );
 	}
 }
 
-std::vector<GraphNode*>* DiGraph::BuildOrder( ) const
+DiGraphNode* DiGraph::AddNode( std::string name, int data )
 {
-	// TODO: Make this make sense
-	std::unordered_set<GraphNode*> nodesWithoutDependencies = this->nodes;
-	for ( GraphNode* pNode : this->nodes )
+	DiGraphNode* pNode = new DiGraphNode( name, data );
+	assert( pNode );
+
+	if ( this->nodes.empty( ) )
 	{
-		for ( GraphNode* pNeighbor : pNode->neighbors )
+		this->pRoot = pNode;
+	}
+
+	this->nodes.insert( pNode );
+
+	return pNode;
+}
+
+void DiGraph::RemoveNode( DiGraphNode* pNode )
+{
+	this->nodes.erase( pNode );
+
+	for ( GraphNode* pVertex : this->nodes )
+	{
+		DiGraphNode* pDGN = (DiGraphNode*) pVertex;		// downcast safely
+
+		pDGN->RemoveInNeighbor( pNode );
+		pDGN->RemoveOutNeighbor( pNode );
+	}
+
+	// set a new root if necessary
+	if ( this->pRoot = pNode )
+	{
+		this->pRoot = this->nodes.empty( ) ? nullptr : *this->nodes.cbegin( );
+	}
+
+	delete pNode;
+	pNode = nullptr;
+}
+
+std::vector<std::string>* DiGraph::CreateBuildOrder( )
+{
+	std::vector<std::string>* pBuildOrder = new std::vector<std::string>( );
+	std::unordered_set<DiGraphNode*> toDelete;
+	size_t counter = this->nodes.size( );
+	size_t originalSize = counter;
+
+	while ( not this->nodes.empty( ) and
+			counter > 0 )
+	{
+		for ( GraphNode* pGN : this->nodes )
 		{
-			nodesWithoutDependencies.erase( pNeighbor );
+			DiGraphNode* pDGN = (DiGraphNode*) pGN;	// downcast with confidence
+
+			if ( pDGN->GetInDegree( ) == 0 )
+			{
+				// add everything with no dependencies
+				pBuildOrder->push_back( pDGN->GetName( ) );
+				toDelete.insert( pDGN );
+			}
 		}
+
+		// remove the ones you inserted
+		for ( DiGraphNode* pDGN : toDelete )
+		{
+			this->RemoveNode( pDGN );
+		}
+
+		// reset 
+		toDelete.clear( );
+		counter--;
 	}
 
-	if ( nodesWithoutDependencies.empty( ) )
+	if ( pBuildOrder->size( ) < originalSize )
 	{
-		assert( false );
+		// if we didn't get everyone, wipe the slate
+		pBuildOrder->clear( );
 	}
 
-	std::vector<GraphNode*>* pBuildOrder = new std::vector<GraphNode*>( );
-	assert( pBuildOrder );
-
-
+	return pBuildOrder;
 }
+

@@ -120,6 +120,12 @@
     <ClCompile Include="DiGraph.cpp">
       <Filter>Source Files\ChapterFour</Filter>
     </ClCompile>
+    <ClCompile Include="DiGraphNode.cpp">
+      <Filter>Source Files\ChapterFour</Filter>
+    </ClCompile>
+    <ClCompile Include="DiGraphTests.cpp">
+      <Filter>Source Files\_Tests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ChapterOne.h">
@@ -198,6 +204,9 @@
       <Filter>Header Files\ChapterFour</Filter>
     </ClInclude>
     <ClInclude Include="DiGraph.h">
+      <Filter>Header Files\ChapterFour</Filter>
+    </ClInclude>
+    <ClInclude Include="DiGraphNode.h">
       <Filter>Header Files\ChapterFour</Filter>
     </ClInclude>
   </ItemGroup>

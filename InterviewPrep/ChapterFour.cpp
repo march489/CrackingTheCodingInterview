@@ -3,6 +3,7 @@
 #include "GraphNode.h"
 #include "Graph.h"
 #include "BinaryTree.h"
+#include "DiGraph.h"
 
 void RunTests_ChapterFour( )
 {
@@ -10,4 +11,5 @@ void RunTests_ChapterFour( )
 	GraphNode::RunTests_GraphNodes( );
 	Graph::RunTests_GraphBasics( );
 	BinaryTree::RunTests_BinaryTree( );
+	DiGraph::RunTests_DiGraph( );
 }
