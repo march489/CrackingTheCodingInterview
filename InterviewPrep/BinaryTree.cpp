@@ -4,7 +4,7 @@
 #include <unordered_set>
 
 BinaryTree::BinaryTree( )
-	: pRoot{ nullptr }
+	: pRoot{ nullptr }, size( 0 )
 {
 
 }
@@ -26,6 +26,8 @@ BinaryTree::BinaryTree( const std::vector<int>& arr )
 
 BinaryTreeNode* BinaryTree::AddNode( int k )
 {
+	this->size += 1;
+
 	if ( this->pRoot )
 	{
 		return this->AddNode( this->pRoot, k );
@@ -120,6 +122,8 @@ BinaryTreeNode* BinaryTree::CreateNodesFromArray( const std::vector<int>& arr,
 	BinaryTreeNode* pNode = new BinaryTreeNode( arr[midpt] );
 	assert( pNode );
 
+	this->size += 1;
+
 	BinaryTreeNode* pLeftChild = this->CreateNodesFromArray( arr, start, midpt - 1 );
 	pNode->SetLeftChild( pLeftChild );
 
@@ -155,7 +159,7 @@ std::vector<std::list<int>*>* BinaryTree::privAllSequences( BinaryTreeNode* pNod
 	pPrefix->push_back( pNode->data );
 
 	std::vector<std::list<int>*>* pLeftSeqs = this->privAllSequences( pNode->leftChild );
-	std::vector<std::list<int>*>* pRightSeqs = this->privAllSequences( pNode->rightChild);
+	std::vector<std::list<int>*>* pRightSeqs = this->privAllSequences( pNode->rightChild );
 
 	for ( std::list<int>* leftSeq : *pLeftSeqs )
 	{
@@ -165,7 +169,7 @@ std::vector<std::list<int>*>* BinaryTree::privAllSequences( BinaryTreeNode* pNod
 			assert( pResult );
 
 			privWeaveLists( leftSeq, rightSeq, pWovenLists, pPrefix );
-			
+
 			for ( std::list<int>* pList : *pWovenLists ) {
 				pResult->push_back( pList );
 			}
@@ -173,6 +177,56 @@ std::vector<std::list<int>*>* BinaryTree::privAllSequences( BinaryTreeNode* pNod
 	}
 
 	return pResult;
+}
+
+int BinaryTree::privPathsWithSum( std::list<int>* totals, BinaryTreeNode* pNode, int sum ) const
+{
+	int result = 0;
+
+	if ( pNode )
+	{
+		if ( pNode->data == sum )
+		{
+			// bonus path of length 1 if pNode->data == sum
+			result++;
+		}
+
+		int difference = sum - pNode->data;
+		for ( int& pathSum : *totals )
+		{
+			if ( pathSum == difference )
+			{
+				// count valid paths
+				result++;
+			}
+
+			// update each entry to pass onto children
+			pathSum += pNode->data;
+		}
+
+		// now append yourself as a link in the chain before passing to children
+		totals->push_back( pNode->data );
+
+		// call on each of your children
+		result += this->privPathsWithSum( totals, pNode->leftChild, sum );
+		result += this->privPathsWithSum( totals, pNode->rightChild, sum ); 
+
+		// reset totals before returning to parent
+		totals->pop_back( );
+		for ( int& pathSum : *totals )
+		{
+			pathSum -= pNode->data;
+		}
+
+		return result;
+	}
+	else
+	{
+		// pNode == nullptr
+		// we should return 0
+	}
+
+	return result;
 }
 
 void BinaryTree::privWeaveLists( std::list<int>* pFirst, std::list<int>* pSecond, std::vector<std::list<int>*>* pResults, std::list<int>* pPrefix )
@@ -198,7 +252,7 @@ void BinaryTree::privWeaveLists( std::list<int>* pFirst, std::list<int>* pSecond
 		}
 
 		pResults->push_back( result );
-		
+
 		return;
 	}
 
@@ -376,6 +430,28 @@ BinaryTreeNode* BinaryTree::sucessor( BinaryTreeNode* pNode ) const
 	}
 
 	return p;
+}
+
+BinaryTreeNode* BinaryTree::GetRandomNode( ) const
+{
+	BinaryTreeNode* pResult = this->pRoot;
+
+	if ( pResult )
+	{
+		unsigned int steps = rand( ) % this->size;
+
+		for ( int i = 0; i < steps; i++ )
+		{
+			pResult = this->sucessor( pResult );
+		}
+	}
+
+	return pResult;
+}
+
+int BinaryTree::PathsWithSum( int sum ) const
+{
+	return this->privPathsWithSum( new std::list<int>( ), this->pRoot, sum );
 }
 
 void BinaryTree::PrintBSTSequences( )

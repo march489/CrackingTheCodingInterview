@@ -26,6 +26,10 @@ void BinaryTree::RunTests_BinaryTree_AddNode( )
 	bTree.AddNode( 12 );
 	bTree.AddNode( 9 );
 
+	assert( bTree.size == 7 );
+	assert( bTree.height( ) == 5 );
+	assert( bTree.PathsWithSum( 12 ) == 2 );
+
 	std::cout << "\nPrinting Binary Tree -- BFS ...\n";
 	bTree.BFS( &BinaryTreeNode::Print );
 
@@ -35,6 +39,11 @@ void BinaryTree::RunTests_BinaryTree_AddNode( )
 	std::vector<int> vec{ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
 		11, 12, 13, 14, 15, 16, 17, 18 ,19, 20 };
 	BinaryTree bTree2( vec );
+
+	assert( bTree2.size == 20 );
+
+	int pathsSizeOne = bTree2.PathsWithSum( 1 );
+	assert( pathsSizeOne == 1 );
 
 	std::cout << "\nPrinting Binary Tree -- BFS ...\n";
 	bTree2.BFS( &BinaryTreeNode::Print );
@@ -47,7 +56,7 @@ void BinaryTree::RunTests_BinaryTree_AddNode( )
 
 	std::cout << "\nPrinting Nodes by Depth...\n";
 	int depth = 0;
-	for ( auto list : ( *pVec ) )
+	for ( auto& list : ( *pVec ) )
 	{
 		printf( "\tPrinting nodes at depth %d:\n", depth );
 		for ( auto pNode : list )
@@ -111,7 +120,7 @@ void BinaryTree::RunTests_BinaryTree_AddNode( )
 
 	pTarget = bTree2.sucessor( pTarget );
 	assert( pTarget and pTarget->data == 17 );
-		
+
 	pTarget = bTree2.sucessor( pTarget );
 	assert( pTarget and pTarget->data == 18 );
 
@@ -126,4 +135,35 @@ void BinaryTree::RunTests_BinaryTree_AddNode( )
 
 	std::cout << "Running PrintBSTSeqs:\n";
 	bTree.PrintBSTSequences( );
+
+	BinaryTree bTree3;
+	BinaryTreeNode* pNodeA = bTree3.AddNode( 10 );
+	BinaryTreeNode* pNodeB = new BinaryTreeNode( -2 );
+	BinaryTreeNode* pNodeC = new BinaryTreeNode( 0 );
+	BinaryTreeNode* pNodeD = new BinaryTreeNode( 5 );
+	BinaryTreeNode* pNodeE = new BinaryTreeNode( 3 );
+	BinaryTreeNode* pNodeF = new BinaryTreeNode( 4 );
+	BinaryTreeNode* pNodeG = new BinaryTreeNode( 0 );
+	BinaryTreeNode* pNodeH = new BinaryTreeNode( -5 );
+	BinaryTreeNode* pNodeI = new BinaryTreeNode( -10 );
+	
+	pNodeA->SetLeftChild( pNodeB );
+	pNodeA->SetRightChild( pNodeC );
+
+	pNodeB->SetLeftChild( pNodeD );
+	pNodeB->SetRightChild( pNodeE );
+
+	pNodeE->SetLeftChild( pNodeH );
+
+	pNodeC->SetLeftChild( pNodeF );
+	pNodeC->SetRightChild( pNodeG );
+	pNodeG->SetRightChild( pNodeI );
+
+	std::cout << "\nPrinting Binary Tree -- BFS ...\n";
+	bTree3.BFS( &BinaryTreeNode::Print );
+	std::cout << "\nPrinting Binary Tree -- DFS ...\n";
+	bTree3.DFS( &BinaryTreeNode::Print );
+
+	assert( bTree3.PathsWithSum( 10 ) == 3 );
+	assert( bTree3.PathsWithSum( 0 ) == 4 );
 }

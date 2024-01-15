@@ -27,6 +27,8 @@ public:
 	int height( ) const;
 	bool IsBalanced( ) const;
 	BinaryTreeNode* sucessor( BinaryTreeNode* pNode ) const;
+	BinaryTreeNode* GetRandomNode( ) const;
+	int PathsWithSum( int sum ) const;
 
 	void PrintBSTSequences( );
 
@@ -34,6 +36,7 @@ public:
 
 private:
 	std::vector<std::list<int>*>* privAllSequences( BinaryTreeNode* pNode );
+	int privPathsWithSum( std::list<int>* totals, BinaryTreeNode* pNode, int sum ) const;
 	void privWeaveLists( std::list<int>* pFirst, std::list<int>* pSecond, std::vector<std::list<int>*>* pResults, std::list<int>* pPrefix );
 
 	void privDFS( void ( BinaryTreeNode::* fptr ) ( void ),
@@ -51,5 +54,6 @@ private:
 
 private:
 	BinaryTreeNode* pRoot;
+	unsigned int size;
 };
 #endif // !BINARY_TREE_H
