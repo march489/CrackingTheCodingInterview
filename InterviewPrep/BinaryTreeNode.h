@@ -1,6 +1,10 @@
 #ifndef TREE_NODE_H
 #define TREE_NODE_H
 
+#include <iostream>
+#include <vector>
+#include <list>
+
 class BinaryTreeNode
 {
 public:

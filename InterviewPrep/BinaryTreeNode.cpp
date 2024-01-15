@@ -1,5 +1,7 @@
 #include "BinaryTreeNode.h"
 #include <iostream>
+#include <string>
+#include <assert.h>
 
 BinaryTreeNode::BinaryTreeNode( int _data )
 	: parent{ nullptr }, leftChild{ nullptr }, rightChild{ nullptr }, data( _data )

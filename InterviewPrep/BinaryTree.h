@@ -28,9 +28,14 @@ public:
 	bool IsBalanced( ) const;
 	BinaryTreeNode* sucessor( BinaryTreeNode* pNode ) const;
 
+	void PrintBSTSequences( );
+
 	static void RunTests_BinaryTree( );
 
 private:
+	std::vector<std::list<int>*>* privAllSequences( BinaryTreeNode* pNode );
+	void privWeaveLists( std::list<int>* pFirst, std::list<int>* pSecond, std::vector<std::list<int>*>* pResults, std::list<int>* pPrefix );
+
 	void privDFS( void ( BinaryTreeNode::* fptr ) ( void ),
 				  BinaryTreeNode* pNode );
 
@@ -38,6 +43,7 @@ private:
 	BinaryTreeNode* CreateNodesFromArray( const std::vector<int>& arr,
 										  int start,
 										  int end );
+
 
 	// tests
 	static void RunTests_BinaryTree_AddNode( );

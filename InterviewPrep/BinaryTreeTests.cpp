@@ -23,6 +23,8 @@ void BinaryTree::RunTests_BinaryTree_AddNode( )
 	bTree.AddNode( 7 );
 	bTree.AddNode( 10 );
 	bTree.AddNode( 20 );
+	bTree.AddNode( 12 );
+	bTree.AddNode( 9 );
 
 	std::cout << "\nPrinting Binary Tree -- BFS ...\n";
 	bTree.BFS( &BinaryTreeNode::Print );
@@ -121,4 +123,7 @@ void BinaryTree::RunTests_BinaryTree_AddNode( )
 
 	pTarget = bTree2.sucessor( pTarget );
 	assert( pTarget == nullptr );
+
+	std::cout << "Running PrintBSTSeqs:\n";
+	bTree.PrintBSTSequences( );
 }

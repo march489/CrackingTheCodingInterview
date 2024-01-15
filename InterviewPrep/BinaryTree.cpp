@@ -139,6 +139,88 @@ BinaryTreeNode* BinaryTree::CreateNodesFromArray( const std::vector<int>& arr,
 	return pNode;
 }
 
+std::vector<std::list<int>*>* BinaryTree::privAllSequences( BinaryTreeNode* pNode )
+{
+	std::vector<std::list<int>*>* pResult = new std::vector<std::list<int>*>( );
+	assert( pResult );
+
+	if ( not pNode )
+	{
+		pResult->push_back( new std::list<int>( ) );
+		return pResult;
+	}
+
+	std::list<int>* pPrefix = new std::list<int>( );
+	assert( pPrefix );
+	pPrefix->push_back( pNode->data );
+
+	std::vector<std::list<int>*>* pLeftSeqs = this->privAllSequences( pNode->leftChild );
+	std::vector<std::list<int>*>* pRightSeqs = this->privAllSequences( pNode->rightChild);
+
+	for ( std::list<int>* leftSeq : *pLeftSeqs )
+	{
+		for ( std::list<int>* rightSeq : *pRightSeqs )
+		{
+			std::vector<std::list<int>*>* pWovenLists = new std::vector<std::list<int>*>( );
+			assert( pResult );
+
+			privWeaveLists( leftSeq, rightSeq, pWovenLists, pPrefix );
+			
+			for ( std::list<int>* pList : *pWovenLists ) {
+				pResult->push_back( pList );
+			}
+		}
+	}
+
+	return pResult;
+}
+
+void BinaryTree::privWeaveLists( std::list<int>* pFirst, std::list<int>* pSecond, std::vector<std::list<int>*>* pResults, std::list<int>* pPrefix )
+{
+	if ( pFirst->size( ) == 0 or pSecond->size( ) == 0 )
+	{
+		std::list<int>* result = new std::list<int>( );
+		assert( result );
+
+		for ( auto it = pPrefix->begin( ); it != pPrefix->end( ); it++ )
+		{
+			result->push_back( *it );
+		}
+
+		for ( auto it = pFirst->begin( ); it != pFirst->end( ); it++ )
+		{
+			result->push_back( *it );
+		}
+
+		for ( auto it = pSecond->begin( ); it != pSecond->end( ); it++ )
+		{
+			result->push_back( *it );
+		}
+
+		pResults->push_back( result );
+		
+		return;
+	}
+
+	// go left first
+	pPrefix->push_back( pFirst->front( ) );
+	pFirst->pop_front( );
+	privWeaveLists( pFirst, pSecond, pResults, pPrefix );
+
+	// reset
+	pFirst->push_front( pPrefix->back( ) );
+	pPrefix->pop_back( );
+
+	// now go right
+	pPrefix->push_back( pSecond->front( ) );
+	pSecond->pop_front( );
+	privWeaveLists( pFirst, pSecond, pResults, pPrefix );
+
+	// reset
+	pSecond->push_front( pPrefix->back( ) );
+	pPrefix->pop_back( );
+}
+
 void BinaryTree::privDFS( void( BinaryTreeNode::* fptr )( void ),
 						  BinaryTreeNode* pNode )
 {
@@ -295,3 +377,24 @@ BinaryTreeNode* BinaryTree::sucessor( BinaryTreeNode* pNode ) const
 
 	return p;
 }
+
+void BinaryTree::PrintBSTSequences( )
+{
+	if ( this->pRoot )
+	{
+		std::vector<std::list<int>*>* pResults = this->privAllSequences( this->pRoot );
+		assert( pResults );
+
+		for ( std::list<int>* pList : *pResults )
+		{
+			for ( int i : *pList )
+			{
+				std::cout << i << " ";
+			}
+
+			std::cout << std::endl;
+		}
+	}
+}
+
+
