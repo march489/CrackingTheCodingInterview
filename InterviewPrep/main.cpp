@@ -2,6 +2,7 @@
 #include "ChapterTwo.h"
 #include "ChapterThree.h"
 #include "ChapterFour.h"
+#include "ChapterFive.h"
 
 int main()
 {
@@ -9,4 +10,5 @@ int main()
 	RunTests_ChapterTwo();
 	RunTests_ChapterThree( );
 	RunTests_ChapterFour( );
+	RunTests_ChapterFive( );
 }

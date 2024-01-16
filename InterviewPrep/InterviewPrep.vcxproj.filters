@@ -40,6 +40,12 @@
     <Filter Include="Header Files\ChapterFour">
       <UniqueIdentifier>{884f08c9-e13d-4323-9b0f-342f7b65f562}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\ChapterFive">
+      <UniqueIdentifier>{d936ff98-59da-4d89-a88b-57169a7e956e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ChapterFive">
+      <UniqueIdentifier>{28d6d276-79ea-496c-8f88-5643314d4c88}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -126,6 +132,12 @@
     <ClCompile Include="DiGraphTests.cpp">
       <Filter>Source Files\_Tests</Filter>
     </ClCompile>
+    <ClCompile Include="BitManipulationTests.cpp">
+      <Filter>Source Files\_Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="BitManipulation.cpp">
+      <Filter>Source Files\ChapterFive</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ChapterOne.h">
@@ -208,6 +220,12 @@
     </ClInclude>
     <ClInclude Include="DiGraphNode.h">
       <Filter>Header Files\ChapterFour</Filter>
+    </ClInclude>
+    <ClInclude Include="BitManipulation.h">
+      <Filter>Header Files\ChapterFive</Filter>
+    </ClInclude>
+    <ClInclude Include="ChapterFive.h">
+      <Filter>Header Files\ChapterFive</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
